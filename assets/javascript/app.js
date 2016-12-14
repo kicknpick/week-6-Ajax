@@ -57,8 +57,15 @@ $('document').ready(function() {
 		            var p = $("<p>").text("Rating: " + rating);
 		            console.log(p);
 
+		            var animated = results[i].images.fixed_height.url;
+		            var still = results[i].images.fixed_height_still.url;
+
 		            var christmasImage = $("<img>");
-		            christmasImage.attr("src", results[i].images.fixed_height.url);
+		            christmasImage.attr("data-still", still);
+		            christmasImage.attr("data-animate", animated);
+		            christmasImage.attr("src", still);
+		            christmasImage.attr("data-state", "still");
+		            christmasImage.addClass("christmasImage");
 
 		            giphDiv.prepend(p);
 		            giphDiv.prepend(christmasImage);
@@ -74,5 +81,19 @@ $('document').ready(function() {
 
 		   
 	});
+
+	$(document).on("click", ".christmasImage", function() {
+		var state = $(this).attr("data-state");
+		console.log(this)
+		if ( state == "still") {
+			$(this).attr("src", $(this).data("animate"));
+			$(this).attr("data-state", "animate");
+		}else {
+			$(this).attr("src", $(this).data("still"));
+			$(this).attr("data-state", "still");
+		}
+	});
+
+	return false;
 
 });
